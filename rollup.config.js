@@ -11,12 +11,12 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const config = {
   //  Our games entry point (edit as required)
-  input: 'src/game.ts',
+  input: 'src/index.ts',
 
   //  Where the build file is to be generated.
   //  Most games being built for distribution can use iife as the module type.
   output: {
-    file: 'public/game.js',
+    file: 'public/index.js',
     name: 'Phaser',
     format: 'iife',
     sourcemap: isProd,
