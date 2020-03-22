@@ -12,7 +12,7 @@ This is a Phaser 3 starter with [TypeScript](https://www.typescriptlang.org/) an
 | `yarn build` | Builds code bundle with production settings (minification, no source maps, etc..) |
 | `yarn start` | Run a web server to serve built code bundle |
 
-## Developmnet
+## Development
 
 After cloning the repo, run `yarn install` from your project directory. Then, you can start the local development
 server by running `yarn dev`.
@@ -23,4 +23,4 @@ by default).
 
 ## Production
 
-After running `yarn build` , the files you need for production will be on the `public` folder.
+After running `yarn build`, the files you need for production will be on the `public` folder.
