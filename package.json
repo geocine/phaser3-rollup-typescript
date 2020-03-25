@@ -4,7 +4,7 @@
   "description": "Phaser 3 TypeScript Starter",
   "main": "src/game.ts",
   "scripts": {
-    "dev": "rollup -c -w",
+    "dev": "rimraf public && cross-env NODE_ENV=development nollup -c --hot --content-base public",
     "build": "rimraf public && cross-env NODE_ENV=production rollup -c",
     "start": "serve public"
   },
@@ -21,14 +21,13 @@
   "devDependencies": {
     "@rollup/plugin-replace": "^2.3.0",
     "cross-env": "^7.0.2",
+    "nollup": "^0.10.6",
     "phaser": "^3.22.0",
     "rimraf": "^3.0.2",
     "rollup": "^1.29.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.3.0",
-    "rollup-plugin-livereload": "^1.0.4",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-serve": "^1.0.1",
     "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-typescript2": "^0.26.0",
     "serve": "^11.3.0",

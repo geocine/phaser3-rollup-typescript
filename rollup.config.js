@@ -1,9 +1,7 @@
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
-import serve from 'rollup-plugin-serve';
 import typescript from 'rollup-plugin-typescript2';
-import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import copy from 'rollup-plugin-copy';
 
@@ -70,22 +68,6 @@ if (isProd) {
     terser({
       mangle: false
     })
-  ];
-} else {
-  config.plugins = [
-    ...config.plugins,
-    //  See https://www.npmjs.com/package/rollup-plugin-serve for config options
-    serve({
-      open: true,
-      verbose: true,
-      contentBase: 'public',
-      host: 'localhost',
-      port: 2020,
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      }
-    }),
-    livereload('public')
   ];
 }
 
