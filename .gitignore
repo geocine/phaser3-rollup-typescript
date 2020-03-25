@@ -8,4 +8,4 @@ Thumbs.db
 node_modules/
 
 # Build
-public
+dist

@@ -1,9 +1,11 @@
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import alias from '@rollup/plugin-alias';
 import typescript from 'rollup-plugin-typescript2';
 import { terser } from 'rollup-plugin-terser';
-import copy from 'rollup-plugin-copy';
+import staticFiles from 'rollup-plugin-static-files';
+import path from 'path';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -14,7 +16,8 @@ const config = {
   //  Where the build file is to be generated.
   //  Most games being built for distribution can use iife as the module type.
   output: {
-    file: 'public/index.js',
+    dir: 'dist',
+    entryFileNames: 'index.js',
     name: 'Phaser',
     format: 'iife',
     sourcemap: isProd,
@@ -35,17 +38,21 @@ const config = {
       )
     }),
 
-    // Copy to public folder
-    copy({
-      targets: [
-        { src: 'src/index.html', dest: 'public' },
-        { src: 'src/assets', dest: 'public' }
-      ]
-    }),
-
     // Parse our .ts source files
     resolve({
       extensions: ['.ts']
+    }),
+
+    alias({
+      entries: [
+        {
+          find: 'phaser',
+          replacement: path.resolve(
+            process.cwd(),
+            'node_modules/phaser/dist/phaser.js'
+          )
+        }
+      ]
     }),
 
     // We need to convert the Phaser 3 CJS modules into a format Rollup can use:
@@ -64,6 +71,9 @@ const config = {
 if (isProd) {
   config.plugins = [
     ...config.plugins,
+    staticFiles({
+      include: ['./public']
+    }),
     //  See https://www.npmjs.com/package/rollup-plugin-uglify for config options
     terser({
       mangle: false
