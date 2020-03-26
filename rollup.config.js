@@ -9,6 +9,15 @@ import path from 'path';
 
 const isProd = process.env.NODE_ENV === 'production';
 
+// nollup hack
+const hotReload = () => ({
+  renderChunk: code =>
+    code.replace(
+      'modules[number](function (dep) {\n',
+      'module.hot.accept(() => {window.location.reload();})\n\nmodules[number](function (dep) {\n'
+    )
+});
+
 const config = {
   //  Our games entry point (edit as required)
   input: 'src/index.ts',
@@ -20,22 +29,20 @@ const config = {
     entryFileNames: 'index.js',
     name: 'Phaser',
     format: 'iife',
-    sourcemap: isProd,
+    sourcemap: false,
     intro: 'var global = window'
   },
 
   plugins: [
     //  Toggle the booleans here to enable / disable Phaser 3 features:
     replace({
-      'typeof CANVAS_RENDERER': JSON.stringify(true),
-      'typeof WEBGL_RENDERER': JSON.stringify(true),
-      'typeof EXPERIMENTAL': JSON.stringify(true),
-      'typeof PLUGIN_CAMERA3D': JSON.stringify(false),
-      'typeof PLUGIN_FBINSTANT': JSON.stringify(false),
-      'typeof FEATURE_SOUND': JSON.stringify(true),
-      'process.env.NODE_ENV': JSON.stringify(
-        isProd ? 'production' : 'development'
-      )
+      'typeof CANVAS_RENDERER': "'true'",
+      'typeof WEBGL_RENDERER': "'true'",
+      'typeof EXPERIMENTAL': "'true'",
+      'typeof PLUGIN_CAMERA3D': "'false'",
+      'typeof PLUGIN_FBINSTANT': "'false'",
+      'typeof FEATURE_SOUND': "'true'",
+      'process.env.NODE_ENV': isProd ? "'production'" : "'development'"
     }),
 
     //  See https://www.npmjs.com/package/rollup-plugin-typescript2 for config options
@@ -62,7 +69,12 @@ if (isProd) {
     }),
     //  See https://www.npmjs.com/package/rollup-plugin-uglify for config options
     terser({
-      mangle: false
+      mangle: false,
+      compress: {
+        global_defs: {
+          module: false
+        }
+      }
     })
   ];
 } else {
@@ -78,7 +90,8 @@ if (isProd) {
           )
         }
       ]
-    })
+    }),
+    hotReload()
   ];
 }
 
