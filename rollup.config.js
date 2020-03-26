@@ -38,31 +38,6 @@ const config = {
       )
     }),
 
-    // Parse our .ts source files
-    resolve({
-      extensions: ['.ts']
-    }),
-
-    alias({
-      entries: [
-        {
-          find: 'phaser',
-          replacement: path.resolve(
-            process.cwd(),
-            'node_modules/phaser/dist/phaser.js'
-          )
-        }
-      ]
-    }),
-
-    // We need to convert the Phaser 3 CJS modules into a format Rollup can use:
-    commonjs({
-      include: ['node_modules/eventemitter3/**', 'node_modules/phaser/**'],
-      exclude: ['node_modules/phaser/src/polyfills/requestAnimationFrame.js'],
-      sourceMap: isProd,
-      ignoreGlobal: true
-    }),
-
     //  See https://www.npmjs.com/package/rollup-plugin-typescript2 for config options
     typescript()
   ]
@@ -71,12 +46,38 @@ const config = {
 if (isProd) {
   config.plugins = [
     ...config.plugins,
+    // Parse our .ts source files
+    resolve({
+      extensions: ['.ts']
+    }),
+    // We need to convert the Phaser 3 CJS modules into a format Rollup can use:
+    commonjs({
+      include: ['node_modules/eventemitter3/**', 'node_modules/phaser/**'],
+      exclude: ['node_modules/phaser/src/polyfills/requestAnimationFrame.js'],
+      sourceMap: isProd,
+      ignoreGlobal: true
+    }),
     staticFiles({
       include: ['./public']
     }),
     //  See https://www.npmjs.com/package/rollup-plugin-uglify for config options
     terser({
       mangle: false
+    })
+  ];
+} else {
+  config.plugins = [
+    ...config.plugins,
+    alias({
+      entries: [
+        {
+          find: 'phaser',
+          replacement: path.resolve(
+            __dirname,
+            'node_modules/phaser/dist/phaser.js'
+          )
+        }
+      ]
     })
   ];
 }
