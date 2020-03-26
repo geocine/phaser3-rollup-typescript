@@ -1,6 +1,6 @@
 # Phaser 3 TypeScript Starter
 
-This is a Phaser 3 starter with [TypeScript](https://www.typescriptlang.org/) and uses [Rollup](https://rollupjs.org) for bundling.
+This is a Phaser 3 starter with [TypeScript](https://www.typescriptlang.org/), [Rollup](https://rollupjs.org) for bundling and [nollup](https://github.com/PepsRyuu/nollup) as development server.
 
 
 ## Available Commands
@@ -18,9 +18,11 @@ After cloning the repo, run `yarn install` from your project directory. Then, yo
 server by running `yarn dev`.
 
 After starting the development server with `yarn dev`, you can edit any files in the `src` folder
-and Rollup will automatically recompile and reload your server (available at `http://localhost:2020`
+and **nollup** will automatically recompile and reload your browser (available at `http://localhost:8080`
 by default).
+
+The development server makes use of [nollup](https://github.com/PepsRyuu/nollup) which makes hot reload very fast.
 
 ## Production
 
-After running `yarn build`, the files you need for production will be on the `public` folder.
+After running `yarn build`, the files you need for production will be on the `dist` folder. To test code on your `dist` folder, run `yarn start` and navigate to `http://localhost:5000`
