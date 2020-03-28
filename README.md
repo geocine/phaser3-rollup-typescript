@@ -1,16 +1,12 @@
 <h1 align="center">
   <br>
-  <img src="https://i.imgur.com/6lcIxDs.png" alt="header" width="600">
+  <a href="https://github.com/geocine/phaser3-rollup-typescript#readme"><img src="https://i.imgur.com/6lcIxDs.png" alt="header" width="600"/></a>
   <br>
   Phaser 3 TypeScript Starter
   <br>
 </h1>
 
-<p align="center">
-
 This is a [Phaser 3](https://github.com/photonstorm/phaser) starter with [TypeScript](https://www.typescriptlang.org/), [Rollup](https://rollupjs.org) for bundling and [nollup](https://github.com/PepsRyuu/nollup) as development server.
-
-</p>
 
 ## Available Commands
 
@@ -33,7 +29,7 @@ by default).
 The development server makes use of [nollup](https://github.com/PepsRyuu/nollup) which makes hot reload very fast.
 
 <div align="center" markdown="1">
-  <img src="https://i.imgur.com/qXntDUS.gif" width="600px"/>
+  <img src="https://i.imgur.com/qXntDUS.gif" width="600"/>
 </div>
 
 ## Production
