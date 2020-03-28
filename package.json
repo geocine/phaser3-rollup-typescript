@@ -20,6 +20,7 @@
   "homepage": "https://github.com/geocine/phaser3-rollup-typescript#readme",
   "devDependencies": {
     "@rollup/plugin-alias": "^3.0.1",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "@rollup/plugin-replace": "^2.3.0",
     "cross-env": "^7.0.2",
     "nollup": "^0.10.7",
@@ -27,8 +28,6 @@
     "rimraf": "^3.0.2",
     "rollup": "^1.29.0",
     "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-livereload": "^1.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-static-files": "^0.0.1",
     "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-typescript2": "^0.26.0",

@@ -1,5 +1,5 @@
 import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import alias from '@rollup/plugin-alias';
 import typescript from 'rollup-plugin-typescript2';
@@ -8,15 +8,6 @@ import staticFiles from 'rollup-plugin-static-files';
 import path from 'path';
 
 const isProd = process.env.NODE_ENV === 'production';
-
-// nollup hack
-const hotReload = () => ({
-  renderChunk: code =>
-    code.replace(
-      'modules[number](function (dep) {\n',
-      'module.hot.accept(() => {window.location.reload();})\n\nmodules[number](function (dep) {\n'
-    )
-});
 
 const config = {
   //  Our games entry point (edit as required)
@@ -78,6 +69,14 @@ if (isProd) {
     })
   ];
 } else {
+  // nollup hack
+  const hotReload = () => ({
+    renderChunk: code =>
+      code.replace(
+        'modules[number](function (dep) {\n',
+        'module.hot.accept(() => {window.location.reload();})\n\nmodules[number](function (dep) {\n'
+      )
+  });
   config.plugins = [
     ...config.plugins,
     alias({
