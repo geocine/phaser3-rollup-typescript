@@ -1,6 +1,6 @@
 # Phaser 3 TypeScript Starter
 
-This is a Phaser 3 starter with [TypeScript](https://www.typescriptlang.org/), [Rollup](https://rollupjs.org) for bundling and [nollup](https://github.com/PepsRyuu/nollup) as development server.
+This is a [Phaser 3](https://github.com/photonstorm/phaser) starter with [TypeScript](https://www.typescriptlang.org/), [Rollup](https://rollupjs.org) for bundling and [nollup](https://github.com/PepsRyuu/nollup) as development server.
 
 <div align="center" markdown="1">
   <img src="https://i.imgur.com/qXntDUS.gif" width="600px"/>
