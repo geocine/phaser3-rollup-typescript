@@ -2,6 +2,7 @@
 
 This is a Phaser 3 starter with [TypeScript](https://www.typescriptlang.org/), [Rollup](https://rollupjs.org) for bundling and [nollup](https://github.com/PepsRyuu/nollup) as development server.
 
+![Demo](https://i.imgur.com/qXntDUS.gif)
 
 ## Available Commands
 
