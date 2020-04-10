@@ -71,11 +71,14 @@ if (isProd) {
 } else {
   // nollup hack
   const hotReload = () => ({
-    renderChunk: code =>
-      code.replace(
+    renderChunk: (code) => {
+      const defaultExport = /(var Phaser)([\S+\n\r\s]{0,100})(Phaser = _([A-Za-z0-9]*)\(\))(\.default)/g;
+      code = code.replace(defaultExport, 'var ex_$4$2ex_$4 = _$4()');
+      return code.replace(
         'modules[number](function (dep) {\n',
         'module.hot.accept(() => {window.location.reload();})\n\nmodules[number](function (dep) {\n'
-      )
+      );
+    }
   });
   config.plugins = [
     ...config.plugins,

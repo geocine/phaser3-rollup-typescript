@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "noImplicitAny": false,
+    "allowJs": true,
+    "importHelpers": true,
     "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "lib": ["esnext", "dom"]
   },
   "include": ["./src/**/*"]
