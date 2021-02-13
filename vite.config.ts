@@ -1,8 +1,6 @@
 import { defineConfig } from 'vite';
 import replace from '@rollup/plugin-replace';
 
-const isProd = process.env.NODE_ENV === 'production';
-
 export default defineConfig({
   build: {
     rollupOptions: {
@@ -14,8 +12,7 @@ export default defineConfig({
           'typeof EXPERIMENTAL': "'true'",
           'typeof PLUGIN_CAMERA3D': "'false'",
           'typeof PLUGIN_FBINSTANT': "'false'",
-          'typeof FEATURE_SOUND': "'true'",
-          'process.env.NODE_ENV': isProd ? "'production'" : "'development'"
+          'typeof FEATURE_SOUND': "'true'"
         })
       ]
     }
