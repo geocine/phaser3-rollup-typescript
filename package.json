@@ -19,12 +19,12 @@
   },
   "homepage": "https://github.com/geocine/phaser3-rollup-typescript#readme",
   "devDependencies": {
-    "@types/node": "^17.0.10",
+    "@types/node": "^17.0.31",
     "@rollup/plugin-alias": "^3.1.9",
-    "@rollup/plugin-commonjs": "^21.0.1",
-    "@rollup/plugin-replace": "^3.0.1",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-replace": "^4.0.0",
     "phaser": "^3.55.2",
-    "typescript": "^4.5.4",
-    "vite": "^2.7.13"
+    "typescript": "^4.6.4",
+    "vite": "^2.9.8"
   }
 }
