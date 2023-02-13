@@ -11,6 +11,7 @@ const XTS_SPEED = 200;
 const INGREDIENTS = {
   dough : 1,
   sauce : 0.7,
+  salami : 0.5,
   cheese : 0.8,
   oven : 1
 }
@@ -18,6 +19,7 @@ const INGREDIENTS = {
 enum ingredients{
   dough = 0,
   sauce,
+  salami,
   cheese,
   oven,
   xts,
@@ -50,8 +52,7 @@ class Task{
     this.failed = false
     for( const [key, value] of Object.entries(INGREDIENTS)){
       this.ingredients_list.push({req : Math.random() <= value, done : false, name: key});
-    }
-    setTimeout(() => {this.failed = true}, 30000);
+    } 
   }
 
   stepDone(step : ingredients) : ingredients{
@@ -132,6 +133,7 @@ export default class Demo extends Phaser.Scene {
   private oven : Phaser.Physics.Arcade.Sprite;
   private clock : Phaser.Physics.Arcade.Sprite;
   private task_list : Task_list;
+  private salami : Phaser.Physics.Arcade.Image;
   
   
   constructor() {
@@ -148,11 +150,12 @@ export default class Demo extends Phaser.Scene {
     this.load.image('xtscurve', 'XTSRailCurve100.png');
     this.load.spritesheet('xtsmover', 'XTSMoverSpritesheet100.png', {frameWidth : 100, frameHeight: 100});
     this.load.spritesheet('arrow', 'Arrow100.png', {frameWidth: 100, frameHeight:100});
-    this.load.spritesheet('pizza', 'PizzaSpriteSheet100.png',{frameWidth: 100, frameHeight:100});
+    this.load.spritesheet('pizza', 'Pizza100.png',{frameWidth: 100, frameHeight:100});
     this.load.image('sauce-machine', 'saucemachine100.png');
     this.load.spritesheet('cheese', 'Käse100.png', {frameHeight:200, frameWidth:100});
     this.load.spritesheet('oven', 'Oven100.png', {frameWidth: 100, frameHeight : 110});
     this.load.spritesheet('clock', 'Clock100.png', {frameHeight:100, frameWidth:100});
+    this.load.image('salami', 'Salami100.png');
   }
 
   create() {
@@ -195,13 +198,13 @@ export default class Demo extends Phaser.Scene {
     xtstemp = this.physics.add.image(WIDTH/2 + 310, HEIGHT - 500, 'xtscurve');
     xtstemp.angle = -90;
     this.xtsCurve.add(xtstemp);
-    for(let i = 0; i < 5; i++){
+    for(let i = 0; i < 8; i++){
         xtstemp = this.physics.add.image(WIDTH/2 + 410 + 100*i, HEIGHT - 300, 'xtsrail');
         xtstemp.angle = 180;
         this.xts.add(xtstemp);
         this.xts.add(this.physics.add.image(WIDTH/2 + 410 + 100*i, HEIGHT - 500, 'xtsrail'));
     }
-    for(let i = 0; i < 5; i++){
+    for(let i = 0; i < 8; i++){
       xtstemp = this.physics.add.image(WIDTH/2 -25 + -400, HEIGHT - 600 - 100*i, 'xtsrail');
       xtstemp.angle = 90;
       this.xts.add(xtstemp);
@@ -209,7 +212,7 @@ export default class Demo extends Phaser.Scene {
     xtstemp = this.physics.add.image(WIDTH/2 -25 + -400, HEIGHT - 500, 'xtscurve');
     xtstemp.angle = 90;
     this.xtsCurve.add(xtstemp);
-    for(let i = 0; i < 3; i++){
+    for(let i = 0; i < 6; i++){
       xtstemp = this.physics.add.image(WIDTH/2 -25 + -500 -100*i, HEIGHT - 500, 'xtsrail');
       xtstemp.angle = 180;
       this.xts.add(xtstemp);
@@ -289,6 +292,9 @@ export default class Demo extends Phaser.Scene {
     this.arrow.setFlipX(true);
     this.arrow.anims.play('highlight', true);
 
+    //salami
+    this.salami = this.physics.add.image(WIDTH/2 -50 + 200, HEIGHT -600, 'salami');
+
     this.data.set('tutorial', true);
     //set depth of objets
     this.tiles.setDepth(depth.tile);
@@ -299,6 +305,7 @@ export default class Demo extends Phaser.Scene {
     this.xtsMover.setDepth(depth.xtsMover);
     this.sauce_machine.setDepth(depth.appliances);
     this.cheese_hopper.setDepth(depth.appliances);
+    this.salami.setDepth(depth.appliances);
     this.oven.setDepth(depth.appliances);
     this.pizza.setDepth(depth.pizza);
     this.arrow.setDepth(depth.arrow);
@@ -463,8 +470,17 @@ export default class Demo extends Phaser.Scene {
 
           if(this.data.get('next-step') == ingredients.cheese)this.cheese_hopper.anims.play('cheese-'+this.cheese_hopper_state, true);
         }
+        else if (this.data.get('next-step') == ingredients.salami && this.e_key.isDown && this.physics.collide(this.mover,this.salami)){
+          this.pizza.setFrame(2);//add sauce to the pizza
+          this.data.set('next-step', this.task_list.stepDone(ingredients.salami));
+
+          //hopper extende
+
+          if(this.data.get('next-step') == ingredients.cheese)this.cheese_hopper.anims.play('cheese-'+this.cheese_hopper_state, true);
+        }
         else if (this.data.get('next-step') == ingredients.cheese && this.e_key.isDown && this.physics.collide(this.mover,this.cheese_hopper)){
-          this.pizza.setFrame(3);//add cheese to the pizza
+          if(this.task_list.tasks[this.task_list.cur_task].ingredients_list[ingredients.salami].req)this.pizza.setFrame(4);//add cheese to the pizza
+          else this.pizza.setFrame(3);
           this.data.set('next-step', this.task_list.stepDone(ingredients.cheese));
           //adjust cheese fill state
           if(this.cheese_hopper_state === 'full')this.cheese_hopper_state = 'medium';
