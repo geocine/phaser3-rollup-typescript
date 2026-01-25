@@ -3,6 +3,20 @@ import replace from '@rollup/plugin-replace';
 import path from 'path';
 
 const globalDefine = { global: 'globalThis' };
+const phaserFeatureFlags = {
+  'typeof CANVAS_RENDERER': JSON.stringify(true),
+  'typeof WEBGL_RENDERER': JSON.stringify(true),
+  'typeof EXPERIMENTAL': JSON.stringify(true),
+  'typeof PLUGIN_CAMERA3D': JSON.stringify(false),
+  'typeof PLUGIN_FBINSTANT': JSON.stringify(false),
+  'typeof FEATURE_SOUND': JSON.stringify(true)
+};
+const phaserReplace = replace({
+  preventAssignment: true,
+  values: phaserFeatureFlags,
+  include: ['**/node_modules/phaser/src/**/*.js']
+});
+phaserReplace.enforce = 'pre';
 
 export default defineConfig({
   define: globalDefine,
@@ -11,6 +25,7 @@ export default defineConfig({
       define: globalDefine
     }
   },
+  plugins: [phaserReplace],
   resolve: {
     alias: {
       // Use Phaser source build so feature flags can be tree-shaken.
@@ -18,21 +33,6 @@ export default defineConfig({
     }
   },
   build: {
-    rollupOptions: {
-      plugins: [
-        //  Toggle the booleans here to enable / disable Phaser 3 features:
-        replace({
-          preventAssignment: true,
-          values: {
-            'typeof CANVAS_RENDERER': JSON.stringify(true),
-            'typeof WEBGL_RENDERER': JSON.stringify(true),
-            'typeof EXPERIMENTAL': JSON.stringify(true),
-            'typeof PLUGIN_CAMERA3D': JSON.stringify(false),
-            'typeof PLUGIN_FBINSTANT': JSON.stringify(false),
-            'typeof FEATURE_SOUND': JSON.stringify(true)
-          }
-        })
-      ]
-    }
+    minify: 'terser'
   }
 });
