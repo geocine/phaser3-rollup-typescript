@@ -22,6 +22,16 @@ This is a [Phaser 3](https://github.com/photonstorm/phaser) starter with [TypeSc
 After cloning the repo, run `yarn install` from your project directory. Then, you can start the local development
 server by running `yarn dev` and navigate to http://localhost:3000.
 
+## Phaser Canvas Warning (Chrome)
+
+Phaser 3 currently creates Canvas 2D contexts in `CanvasFeatures` without the `willReadFrequently` hint, which triggers a Chrome performance warning when `getImageData` is called. This starter applies a small build-time AST patch to set that flag for `CanvasFeatures`.
+
+Disable the patch if needed:
+
+```
+PHASER_CANVAS_PATCH=false
+```
+
 ## Production
 
 After running `yarn build`, the files you need for production will be on the `dist` folder. To test code on your `dist` folder, run `yarn serve` and navigate to http://localhost:5000
