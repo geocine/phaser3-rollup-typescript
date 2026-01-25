@@ -2,7 +2,15 @@ import { defineConfig } from 'vite';
 import replace from '@rollup/plugin-replace';
 import path from 'path';
 
+const globalDefine = { global: 'globalThis' };
+
 export default defineConfig({
+  define: globalDefine,
+  optimizeDeps: {
+    esbuildOptions: {
+      define: globalDefine
+    }
+  },
   resolve: {
     alias: {
       // Use Phaser source build so feature flags can be tree-shaken.
