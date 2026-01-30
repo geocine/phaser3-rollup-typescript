@@ -6,6 +6,15 @@
   <br>
 </h1>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Phaser-3.90.0-3abff8?style=flat-square" alt="Phaser"/>
+  <img src="https://img.shields.io/badge/Vite-7.3.1-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite"/>
+</p>
+
+<p align="center">
+  <strong>This repository is actively maintained and kept up-to-date with the latest dependencies.</strong>
+</p>
+
 This is a [Phaser 3](https://github.com/photonstorm/phaser) starter with [TypeScript](https://www.typescriptlang.org/), [Rollup](https://rollupjs.org) with ⚡️ lightning fast HMR through [Vite](https://vitejs.dev/).
 
 ## Available Commands
